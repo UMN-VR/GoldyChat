@@ -1,9 +1,9 @@
-import discord
-import openai
+import os
+from dotenv import load_dotenv
 
-# Set your bot token
-BOT_TOKEN = 'MTEwMTY0MjgzMzA5MTM2NzAzMw.Gy0IMi.s8u2lX9iyPb_FQGI-USXJkZZzuzIN-xMyZNNfc'
+# Load the environment variables from the creds.env file
+load_dotenv(dotenv_path='creds.env')
 
-
-# Load your OpenAI API key
-API_KEY = "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"
+# Set your bot token and API key from the environment variables
+BOT_TOKEN = os.getenv('BOT_TOKEN')
+API_KEY = os.getenv('API_KEY')
