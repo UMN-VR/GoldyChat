@@ -14,11 +14,11 @@ def update_conversation_log(message, response, conversation_log):
 def generate_response(conversation_log, knowledge_log):
     # Format conversation_log and knowledge_log as the OpenAI API prompt
     prompt = format_prompt(conversation_log, knowledge_log)
-    print(f"Sending prompt to OpenAI API:\n{prompt}\n\n")
+    print(f"\n\nSending prompt to OpenAI API:\n{prompt}\n\n")
     
     # Call OpenAI API with the generated prompt
     response = call_openai_api(prompt, 150)
-    print(f"OpenAI API response: {response}")
+    print(f"OpenAI API response: {response}\n\n")
 
     # Check for pre-defined responses
     predefined_responses = {
@@ -51,7 +51,7 @@ def generate_response(conversation_log, knowledge_log):
     else:
         print(f"No predefined response found for {response.strip()}")
 
-    print(f"Final response to be sent: {response}")
+    print(f"\nFinal response to be sent: {response}")
     return response.strip()
 
 
@@ -62,7 +62,7 @@ def no_comment(conversation_log, knowledge_log):
 
 def make_small_talk(conversation_log, knowledge_log):
     # Generate a prompt for making small talk
-    prompt = "Generate a small talk response."
+    prompt = format_smallTalk_prompt(conversation_log, knowledge_log)
     
     # Call OpenAI API with the generated prompt
     response = call_openai_api(prompt, 1500)
@@ -78,7 +78,7 @@ def make_small_talk(conversation_log, knowledge_log):
     
     # Format conversation_log and knowledge_log as the OpenAI API prompt
     prompt = format_smallTalk_prompt(conversation_log, knowledge_log)
-    print(f"Sending prompt to OpenAI API:\n{prompt}\n\n")
+    print(f"Sending prompt to OpenAI API:\n\n{prompt}\n")
     
     # Call OpenAI API with the generated prompt
     response = call_openai_api(prompt, 1500)
@@ -87,19 +87,30 @@ def make_small_talk(conversation_log, knowledge_log):
     return response.strip()
 
 def format_smallTalk_prompt(conversation_log, knowledge_log):
-    knowledge_log_str = knowledge_log_string(knowledge_log)
+    knowledge_log_str = knowledge_log_string_without_keys(knowledge_log)
     full_prompt = f"{smallTalk_pre_prompt}\n{knowledge_log_str}\n\n{smallTalk_middle_prompt}\n\n{conversation_log_string(conversation_log)}\n\n{smallTalk_post_prompt}"
     return full_prompt
 
-def knowledge_log_string(knowledge_log):
-    facts = [v for k, v in knowledge_log.items() if k.startswith('fact')]
-    info_about_you = [v for k, v in knowledge_log.items() if k.startswith('info_about_you')]
-    earlier_info = [v for k, v in knowledge_log.items() if k.startswith('earlier_info')]
-    formatted_facts = '\n'.join(f'Fact {i}: {fact}' for i, fact in enumerate(facts))
-    formatted_info_about_you = '\n'.join(f'Info About You {i}: {info}' for i, info in enumerate(info_about_you))
-    formatted_earlier_info = '\n'.join(f'Earlier Info {i}: {info}' for i, info in enumerate(earlier_info))
+def knowledge_log_string_helper(knowledge_log, include_keys):
+    def format_section(prefix):
+        section_items = [v for k, v in knowledge_log.items() if k.startswith(prefix)]
+        if include_keys:
+            formatted_section = '\n'.join(f'{prefix} {i}: {item}' for i, item in enumerate(section_items))
+        else:
+            formatted_section = '\n'.join(section_items)
+        return formatted_section
+
+    formatted_facts = format_section('fact')
+    formatted_info_about_you = format_section('info_about_you')
+    formatted_earlier_info = format_section('earlier_info')
+
     return f"{formatted_facts}\n{formatted_info_about_you}\n{formatted_earlier_info}"
 
+def knowledge_log_string_with_keys(knowledge_log):
+    return knowledge_log_string_helper(knowledge_log, True)
+
+def knowledge_log_string_without_keys(knowledge_log):
+    return knowledge_log_string_helper(knowledge_log, False)
 
 def conversation_log_string(conversation_log):
     conversation_history = "| "
@@ -135,14 +146,14 @@ def control_other_robot(conversation_log, knowledge_log):
 
 
 def format_prompt(conversation_log, knowledge_log):
-    facts = knowledge_log.get("fact0", "")
-    info_about_you = "\n".join([knowledge_log.get(f"info_about_you{i}", "") for i in range(2)])
-    earlier_info = "\n".join([knowledge_log.get(f"earlier_info{i}", "") for i in range(len(knowledge_log) - 3)])
-    pre_prompt = f"Facts:\n{facts}\nInfo About You:\n{info_about_you}\nInstructions:{instructions_prompt}\n"
+    knowledge_log_str = knowledge_log_string_without_keys(knowledge_log)
+    pre_prompt = f"{knowledge_log_str}\nInstructions:{instructions_prompt}\n"
     conversation_history = "| "
     for message in conversation_log:
         conversation_history += f"{message['name'].capitalize()}: {message['content']} | "
     full_prompt = pre_prompt + conversation_history + post_prompt
     return full_prompt
+
+
 
 
