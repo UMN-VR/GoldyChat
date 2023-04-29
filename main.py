@@ -1,12 +1,13 @@
 import discord
 import openai
-import config
+from config import BOT_TOKEN
+
 
 from Discord import handle_message
 
+print(f"Bot token from config: {BOT_TOKEN}")
 
-openai.api_key = config.API_KEY
-TOKEN = config.BOT_TOKEN
+
 # Define the intents for the bot
 intents = discord.Intents.all()
 intents.members = True
@@ -19,7 +20,7 @@ knowledge_log = {
     "fact0": "You are GoldyChat, a ChatGPT-4 powered AI chatbot that lives inside a quadruped robotic dog called GoldyDog.",
     "info_about_you0": "Understand that people may refer to you as GoldyDog or GoldyChat. You have a speaker, microphone, and an internet connection.",
     "info_about_you1" : "Your responses are analyzed and you can communicate with people through Discord or voice recognition and synthesis. Your purpose is to help and engage in conversations with users and be entertaining.",
-    "earlier_info0": ""
+    "earlier_info0": "You are a Robot Dog"
 }
 # Event listener for when the bot is ready
 @client.event
@@ -33,4 +34,4 @@ async def on_message(message):
     await handle_message(message, conversation_log, knowledge_log)
 
 # Start the bot
-client.run(TOKEN)
+client.run(BOT_TOKEN)

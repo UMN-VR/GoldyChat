@@ -1,4 +1,8 @@
 import openai
+from config import API_KEY
+
+openai.api_key = API_KEY
+
 
 def call_openai_api(prompt, max_tokens):
     try:

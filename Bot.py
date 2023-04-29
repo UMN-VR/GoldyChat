@@ -2,7 +2,7 @@ from pprint import pprint
 from prompts import post_prompt, instructions_prompt, smallTalk_pre_prompt, smallTalk_middle_prompt, smallTalk_post_prompt
 from Memory import memory_algorithm, generate_summary, format_summary_prompt
 from OpenAI import call_openai_api
-
+import re
 
 def process_message(message, conversation_log, knowledge_log):
     # Update conversation_log and knowledge_log with the new message
@@ -30,13 +30,30 @@ def generate_response(conversation_log, knowledge_log):
         "WEB_SEARCH": web_search,
         "CONTROL_OTHER_ROBOT": control_other_robot,
     }
-    response_func = predefined_responses.get(response.strip())
-    if response_func is not None:
-        response = response_func(conversation_log, knowledge_log)
+
+    # Search for a pre-defined response in the OpenAI API response
+    match = re.search(rf"\b(?:{'|'.join(predefined_responses.keys())})\b", response)
+    if match:
+        # Get the pre-defined response
+        predefined_response = match.group()
+
+        # Extract the text after the pre-defined response
+        text_after_predefined_response = response[match.end():].strip()
+
+        # Get the function corresponding to the pre-defined response
+        response_func = predefined_responses[predefined_response]
+
+        # Call the function corresponding to the pre-defined response
+        predefined_response_result = response_func(conversation_log, knowledge_log)
+
+        # Combine the text after the pre-defined response and the result of the pre-defined response function
+        response = f"{text_after_predefined_response}\n\n{predefined_response_result}"
     else:
         print(f"No predefined response found for {response.strip()}")
+
     print(f"Final response to be sent: {response}")
     return response.strip()
+
 
 def no_comment(conversation_log, knowledge_log):
     print("Going into 'no_comment' function")
@@ -71,7 +88,7 @@ def make_small_talk(conversation_log, knowledge_log):
 
 def format_smallTalk_prompt(conversation_log, knowledge_log):
     knowledge_log_str = knowledge_log_string(knowledge_log)
-    full_prompt = f"{smallTalk_pre_prompt}\n\n{knowledge_log_str}\n\n{smallTalk_middle_prompt}\n\n{conversation_log_string(conversation_log)}\n\n{smallTalk_post_prompt}"
+    full_prompt = f"{smallTalk_pre_prompt}\n{knowledge_log_str}\n\n{smallTalk_middle_prompt}\n\n{conversation_log_string(conversation_log)}\n\n{smallTalk_post_prompt}"
     return full_prompt
 
 def knowledge_log_string(knowledge_log):

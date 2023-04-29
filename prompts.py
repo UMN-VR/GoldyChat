@@ -28,5 +28,5 @@ This is how the conversation looks right now:
 '''
 
 smallTalk_pre_prompt = "Pay attention to the following Facts, information about you, and infomtion that was given to you by the user"
-smallTalk_middle_prompt = "You will not see a log of the conversation"
-smallTalk_post_prompt = "You now must write a long response to the user. Figure out a way to make small talk, ask them about something, or whatever else you want"
+smallTalk_middle_prompt = "You will now see a log of the conversation that you must write a reply for"
+smallTalk_post_prompt = "As the chatbot, how would you respond to the user? You must write a long response to the user. If the user asksed any question you should answer it, otherwise you can make a comment about something, suggest something, ask something or just make small talk. You are speaking to the user and your output will be forwarded automaticaly as a response so please respond ONLY with the text to respond to the user. Be creative and nice."
