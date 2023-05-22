@@ -1,53 +1,51 @@
+# Written by Felipe Galindo & GoldyDog himself
+# Version 7.0.0
+
+# Main.py 
+# For GoldyChat, a Powerful Open Source ChatGPT Chatbot. It can communicate with users via Discord, Terminal, and more.
+
+# TODO UPDATE THIS FILE so that it launches puppeteer right after the "await Init_Systems()" line is executed. As a test open OpenAI's website and see if it works. If it does, then we can start working on the chatbot itself.
+
+# Imports
 import discord
-import openai
 import threading
+import asyncio
+
 from config import BOT_TOKEN
+from Discord import client, send_discord_message_with_image
+import subprocess
 
-from Discord import handle_message
+from UserTerminal import handle_terminal_input  # Import the function that runs the terminal
+from text_colors import Colors, print_colors  # Import the text colors
+from Init import Init_Systems, Init_Memory_Systems, Init_NLPM, Init_NLCM, Init_Feedback_Algorithm, Init_IGN, Init_CGM, Init_Chatbot, Init_Discord_Client  # Import the init functions
 
-#print(f"Bot token from config: {BOT_TOKEN}")
+#print(f"Bot token: {BOT_TOKEN}")
 
-# Define the intents for the bot
-intents = discord.Intents.all()
-intents.members = True
-# Create the client object with the specified intents
-client = discord.Client(intents=intents)
-# Initialize an empty conversation log
-conversation_log = []
-# Initialize an empty knowledge log
-knowledge_log = {
-    "fact0": "You are GoldyChat, a ChatGPT-4 powered AI chatbot that lives inside a quadruped robotic dog called GoldyDog.",
-    "fact1": "Your responses are analyzed and you can communicate with people through Discord or voice recognition and synthesis.",
-    "info_about_you0": "Understand that people may refer to you as GoldyDog or GoldyChat. ",
-    "info_about_you1": "You have a speaker, microphone, camera, and an internet connection.",
-    "info_about_you2": "Your purpose is to help and engage in conversations with users and be entertaining.",
-    "earlier_info0": "You are a Robot Dog"
-}
+chatbot_version = "7.0.0"
+chatbot_name = "GoldyChatAI"
 
-def handle_terminal_input():
-    while True:
-        user_input = input()
-        if user_input == "PRINT_KNOWLEDGE":
-            print("\nKnowledge log:")
-            for key, value in knowledge_log.items():
-                print(f"{key}: {value}")
-            print()
 
-# Event listener for when the bot is ready
-@client.event
-async def on_ready():
-    print(f'\nLogged in as {client.user}')
-    print("Ready for input \n")
-    # Start a separate thread to handle terminal input
-    terminal_thread = threading.Thread(target=handle_terminal_input)
-    terminal_thread.daemon = True
-    terminal_thread.start()
 
-# Event listener for when a message is received
-@client.event
-async def on_message(message):
-    print(f"Got message:{message}")
-    await handle_message(message, conversation_log, knowledge_log)
+
+async def startGoldyChatAI():
+    print_colors()
+
+    print(F"\n\n\n{Colors.GREEN}Starting {chatbot_name} {chatbot_version}...{Colors.RESET}")
+    
+    await Init_Systems()
+
+    # Start listening for terminal input
+    asyncio.create_task(handle_terminal_input())
+
+    # Run the discord client in the same event loop
+    await client.start(BOT_TOKEN)
 
 # Start the bot
-client.run(BOT_TOKEN)
+if __name__ == '__main__':
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(startGoldyChatAI())
+
+
+
+
+
