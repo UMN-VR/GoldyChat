@@ -103,3 +103,15 @@ async def test_hybrid_Puppeteer():
     print("Puppeteer Browser Startup Completed ✅")
     
    
+    # Send each screenshot to the Discord channel
+    urls = ['https://chat.openai.com', 'https://www.google.com', 'https://github.com/UMN-VR/GoldyDogV7']
+    for url in urls:
+        page_id = await loop.run_in_executor(None, open_url, url)
+        screenshot_path = await loop.run_in_executor(None, take_screenshot, page_id)
+        await loop.run_in_executor(None, close_tab, page_id)
+        message = "Here's a screenshot"
+        print(f"Sending screenshot: {screenshot_path}")
+        await send_discord_message_with_image(message, screenshot_path, Channel_ID)
+        print(f"Sent screenshot: {screenshot_path}")
+
+    print("All screenshots sent to Discord.")
