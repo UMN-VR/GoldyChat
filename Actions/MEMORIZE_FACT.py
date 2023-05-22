@@ -1,15 +1,16 @@
 from Memory import knowledge_log_string_without_keys, conversation_log_string, get_highest_fact_index, fact_exists
 from OpenAI import call_openai_api
-from prompts import memorize_pre_prompt, memorize_middle_prompt, memorize_post_prompt
+from Prompts.memorize import memorize_pre_prompt, memorize_middle_prompt, memorize_post_prompt
+from text_colors import Colors
 
-def memorize_fact(server, channel, conversation_log, knowledge_log, predefined_responses, text):
-    print("Going into 'memorize_fact' function")
+async def memorize_fact(server, channel, conversation_log, knowledge_log, predefined_responses, text):
+    print("@memorize_fact")
     prompt = format_memorize_prompt(conversation_log, knowledge_log)
-    print(f"Sending prompt to OpenAI API:\n\n{prompt}\n")
+    print(f"{Colors.BLUE}Sending prompt to OpenAI API:\n\n{prompt}\n{Colors.RESET}")
     
     # Call OpenAI API with the generated prompt
     response = call_openai_api(prompt, 1500)
-    print(f"OpenAI API response: {response}")
+    print(f"{Colors.BRIGHT_BLUE}@memorize_fact OpenAI API response: {response}{Colors.RESET}")
     # Check if the response contains "NO_DATA"
     if "NO_DATA" in response:
         return ""

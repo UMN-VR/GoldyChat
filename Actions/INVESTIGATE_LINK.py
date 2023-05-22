@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from Link import Link
 
-def investigate_link(server, channel, conversation_log, knowledge_log, predefined_responses, text):
+async def investigate_link(server, channel, conversation_log, knowledge_log, predefined_responses, text):
     print("Going into 'INVESTIGATE_LINK' function")
 
     # Extract the URL from the text

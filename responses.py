@@ -22,6 +22,8 @@ from Actions.GITHUB_SEARCH import search_github
 from Actions.REDDIT_SEARCH import search_reddit
 from Actions.GOOGLE_MAPS_SEARCH import search_maps
 from Actions.GOOGLE_SEARCH import search_google
+from Actions.SUMMARIZE_RESEARCH import summarize_research
+from Actions.FURTHER_INVESTIGATE_LINK import further_investigate_link
 
 predefined_responses = {
     "NO_COMMENT": no_comment,
@@ -45,5 +47,9 @@ predefined_responses = {
     "STACKOVERFLOW_SEARCH": search_stackoverflow,
     "GITHUB_SEARCH": search_github,
     "REDDIT_SEARCH": search_reddit,
+    "SUMMARIZE_RESEARCH": summarize_research,
+    "FURTHER_INVESTIGATE_LINK": further_investigate_link,
+    "GIVE_UP": "GIVE_UP"
+    
 
 }

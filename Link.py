@@ -2,7 +2,7 @@
 import requests
 from bs4 import BeautifulSoup
 from OpenAI import call_openai_api
-from prompts import summarize_link_pre_prompt, summarize_link_middle_prompt, summarize_link_website_prompt, summarize_link_post_prompt
+from Prompts.summarizeLink import summarize_link_pre_prompt, summarize_link_middle_prompt, summarize_link_website_prompt, summarize_link_post_prompt
 from Discord import send_discord_message
 
 def summarize_website_string(website_string):
@@ -13,7 +13,7 @@ def summarize_website_string(website_string):
     return call_openai_api(prompt, 1500)
 
 class Link:
-    def __init__(self, url, title=None, origin=None):
+    def __init__(self, url, origin, title=None):
         self.url = url
         self.title = title
         self.origin = origin
@@ -25,17 +25,15 @@ class Link:
 
 
     async def summarize(self, channel, conversation_log, knowledge_log):
-        print("@in summarize link")
+        print("@Link.summarize: {self.title} URL: {self.url} @ {self.origin}\n")
 
         # Fetch and process website content as a string for analysis
         website_string = self.fetch_website_content(self.url)
-        print("Generated Website String:\n")
-        print(website_string)
+        print(f"Generated Website String:\n{website_string}\n")
 
 
         summarized_website_string = summarize_website_string(website_string) 
-        print("Generated Summary Website String:\n")
-        print(summarized_website_string)
+        print(f"\nGenerated Summary Website String:\n{summarized_website_string}\n")
 
         prompt = self.format_summarize_link_prompt(summarized_website_string, conversation_log, knowledge_log)
 
