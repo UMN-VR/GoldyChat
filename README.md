@@ -1,15 +1,72 @@
-# GoldyChat
+# GoldyChat: A Python-based Discord Chatbot
 
-The code is organized into several Python files that work together to create a chatbot that interacts with users on Discord using the OpenAI API. Here's a high-level overview of how the code works:
+GoldyChat is a Python-based chatbot designed to interact with users on Discord. Powered by OpenAI's GPT-3, GoldyChat can engage in conversations, answer questions, and perform various tasks based on user inputs.
 
-config.py: This file loads the bot token and OpenAI API key from the creds.env file. These are used to authenticate the bot and interact with the OpenAI API.
-OpenAI.py: This file contains the call_openai_api function, which takes a prompt and max tokens as input and sends a request to the OpenAI API. The API returns a response based on the provided prompt.
-prompts.py: This file contains pre-defined prompts for various chatbot functionalities, like making small talk, controlling robots, and inventing stories.
-Memory.py: This file contains functions for the memory algorithm, which helps maintain a conversation log and knowledge log. The logs are updated and summarized as the conversation progresses to help the chatbot generate appropriate responses.
-Bot.py: This file contains the core functions of the chatbot. It processes messages, updates conversation logs, and generates responses using the OpenAI API. It also handles pre-defined responses for certain user inputs.
-Discord.py: This file contains the handle_message function, which is the main function that handles incoming messages from users on Discord. It processes the message, generates a response using the chatbot, and sends the response back to the user.
-When a user sends a message on Discord, the handle_message function is called. The message is processed and added to the conversation log. The chatbot then generates a response using the OpenAI API, which may include pre-defined responses for certain user inputs. The response is sent back to the user on Discord, and the conversation and knowledge logs are updated.
+## Table of Contents
+- [Installation and Setup](#installation-and-setup)
+- [Usage](#usage)
+- [Code Overview](#code-overview)
+- [Contributing](#contributing)
+- [Future Plans](#future-plans)
+- [License](#license)
+- [Contact](#contact)
+- [Acknowledgments](#acknowledgments)
 
-The memory algorithm helps the chatbot maintain a coherent conversation by summarizing previous messages and updating the knowledge log accordingly.
+## Installation and Setup
 
-![Readme Conversation](images/Screenshot_Readme_Conv.png)
+1. Clone this repository to your local machine.
+2. Install the required Python libraries using pip:
+    ```
+    pip install -r requirements.txt
+    ```
+3. Set up your OpenAI API key and Discord bot token in a `.env` file in the root directory of the project. The file should look like this:
+    ```
+    OPENAI_API_KEY=your_openai_api_key
+    DISCORD_BOT_TOKEN=your_discord_bot_token
+    ```
+4. Run the bot using Python:
+    ```
+    python Bot.py
+    ```
+
+## Usage
+
+To start the bot, simply run the `Bot.py` file. Once the bot is running, you can invite it to your Discord server and interact with it using various commands. For example, you can ask the bot questions, request it to perform tasks, or just engage in casual conversation.
+
+## Code Overview
+
+- `Bot.py`: The main file of the chatbot. It listens for messages on Discord and responds to them using the OpenAI GPT-3 model.
+- `OpenAI.py`: Contains the function `openai_query`, which generates responses from the GPT-3 model.
+- `config.py`: Loads environment variables from a `.env` file. These variables include the bot token and API keys.
+- `prompts.py`: Contains a variety of prompts and instructions for the chatbot, guiding its behavior in different situations.
+
+## Contributing
+
+Contributions are welcome! To contribute:
+
+1. Fork this repository.
+2. Create a new branch for your changes.
+3. Make your changes in your branch.
+4. Submit a pull request.
+
+Please adhere to this project's coding standards and conventions. If you're not sure about something, feel free to ask!
+
+## Future Plans
+
+We're always looking to improve GoldyChat and add new features. Some of our plans for the future include:
+
+- Improved conversation handling
+- More advanced tasks and commands
+- Integration with other platforms
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+## Contact
+
+If you have any questions or need support with GoldyChat, please contact us at [email@domain.com](mailto:email@domain.com).
+
+## Acknowledgments
+
+We'd like to thank OpenAI for their amazing GPT-3 model, and the Discord.py team for their excellent library.
