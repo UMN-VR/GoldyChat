@@ -1,5 +1,6 @@
 # HybridPuppeteer.py is a script that uses Puppeteer to take screenshots of webpages and sends them to a Discord channel.
 
+
 import requests
 import asyncio
 import subprocess
