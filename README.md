@@ -2,7 +2,7 @@
 
 # GoldyChat: A Python-based Discord Chatbot
 
-GoldyChat is a Python-based chatbot designed to interact with users on Discord. Powered by OpenAI's GPT-3, GoldyChat can engage in conversations, answer questions, and perform various tasks based on user inputs.
+GoldyChat is a Python-based chatbot designed to interact with users on Discord. Powered by OpenAI's GPT-4, GoldyChat can engage in conversations, answer questions, and perform various tasks based on user inputs.
 
 ## Table of Contents
 - [Installation and Setup](#installation-and-setup)
@@ -38,7 +38,7 @@ To start the bot, simply run the `Bot.py` file. Once the bot is running, you can
 ## Code Overview
 
 - `Bot.py`: The main file of the chatbot. It listens for messages on Discord and responds to them using the OpenAI GPT-3 model.
-- `OpenAI.py`: Contains the function `openai_query`, which generates responses from the GPT-3 model.
+- `OpenAI.py`: Contains the function `openai_query`, which generates responses from the GPT-4 model.
 - `config.py`: Loads environment variables from a `.env` file. These variables include the bot token and API keys.
 - `prompts.py`: Contains a variety of prompts and instructions for the chatbot, guiding its behavior in different situations.
 
@@ -71,7 +71,7 @@ If you have any questions or need support with GoldyChat, please contact us at [
 
 ## Acknowledgments
 
-We'd like to thank OpenAI for their amazing GPT-3 model, and the Discord.py team for their excellent library.
+We'd like to thank OpenAI for their amazing GPT-4 model, and the Discord.py team for their excellent library.
 
 ### ⚠ Parts of this repo were made by GoldyChat through ChatGPT4 ⚠
 use with caution 
