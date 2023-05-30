@@ -1,4 +1,5 @@
-# ⚠ Parts of this repo were made by ChatGPT4, use with caution ⚠
+# ⚠ Parts of this repo were made by ChatGPT4⚠
+use with caution 
 
 # GoldyChat: A Python-based Discord Chatbot
 
