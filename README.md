@@ -1,3 +1,5 @@
+# ⚠ Parts of this repo were made by ChatGPT4, use with caution ⚠
+
 # GoldyChat: A Python-based Discord Chatbot
 
 GoldyChat is a Python-based chatbot designed to interact with users on Discord. Powered by OpenAI's GPT-3, GoldyChat can engage in conversations, answer questions, and perform various tasks based on user inputs.
