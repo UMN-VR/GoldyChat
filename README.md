@@ -1,5 +1,4 @@
-# ⚠ Parts of this repo were made by ChatGPT4⚠
-use with caution 
+
 
 # GoldyChat: A Python-based Discord Chatbot
 
@@ -73,3 +72,6 @@ If you have any questions or need support with GoldyChat, please contact us at [
 ## Acknowledgments
 
 We'd like to thank OpenAI for their amazing GPT-3 model, and the Discord.py team for their excellent library.
+
+### ⚠ Parts of this repo were made by GoldyChat through ChatGPT4 ⚠
+use with caution 
